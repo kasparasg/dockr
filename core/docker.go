@@ -40,6 +40,8 @@ func (d *Docker) Deploy(out io.Writer) error {
 }
 
 func (d *Docker) BuildImage(context string, out io.Writer) error {
+	log.Info("Building image: ", context)
+
 	opts := docker.BuildImageOptions{
 		ContextDir:   context,
 		OutputStream: out,

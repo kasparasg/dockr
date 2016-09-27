@@ -8,12 +8,12 @@ import (
 )
 
 type Api struct {
-	Router *mux.Router
+	router *mux.Router
 }
 
 func NewApi() {
 	api := &Api{
-		Router: NewRouter(),
+		router: NewRouter(),
 	}
 
 	api.Listen()
@@ -24,10 +24,10 @@ func NewRouter() *mux.Router {
 
 	for _, route := range routes {
 		router.
-			Methods(route.Method).
-			Path(route.Path).
-			Name(route.Name).
-			Handler(route.Handler)
+			Methods(route.method).
+			Path(route.path).
+			Name(route.name).
+			Handler(route.handler)
 	}
 
 	return router
@@ -36,5 +36,5 @@ func NewRouter() *mux.Router {
 func (a *Api) Listen() {
 	log.Info("Listening on 8080")
 
-	http.ListenAndServe(":8080", a.Router)
+	http.ListenAndServe(":8080", a.router)
 }

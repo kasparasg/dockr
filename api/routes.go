@@ -3,10 +3,10 @@ package api
 import "net/http"
 
 type Route struct {
-	Name    string
-	Method  string
-	Path    string
-	Handler http.HandlerFunc
+	name    string
+	method  string
+	path    string
+	handler http.HandlerFunc
 }
 
 type Routes []Route
@@ -14,4 +14,5 @@ type Routes []Route
 var routes = Routes{
 	Route{"Index", "GET", "/", Index},
 	Route{"CreateBuild", "POST", "/builds", CreateBuild},
+	Route{"CreateComposeBuild", "POST", "/compose-builds", CreateComposeBuild},
 }
