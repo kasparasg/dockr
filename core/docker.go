@@ -33,12 +33,6 @@ func NewDocker(api string, certs string) (*Docker, error) {
 	return &Docker{api, certs, client}, nil
 }
 
-func (d *Docker) Deploy(out io.Writer) error {
-	d.BuildImage("build/express", out)
-
-	return nil
-}
-
 func (d *Docker) BuildImage(context string, out io.Writer) error {
 	log.Info("Building image: ", context)
 

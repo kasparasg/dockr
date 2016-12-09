@@ -5,6 +5,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/kasparasg/dockr/api"
+	"github.com/kasparasg/dockr/queue"
 )
 
 func main() {
@@ -13,6 +14,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	queue.StartDispatcher(2)
 
 	api.NewApi()
 }

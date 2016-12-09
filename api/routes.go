@@ -14,5 +14,5 @@ type Routes []Route
 var routes = Routes{
 	Route{"Index", "GET", "/", Index},
 	Route{"CreateBuild", "POST", "/builds", CreateBuild},
-	Route{"CreateComposeBuild", "POST", "/compose-builds", CreateComposeBuild},
+	Route{"Test", "POST", "/test", Test},
 }

@@ -3,15 +3,17 @@ package api
 import (
 	"bufio"
 	"encoding/json"
+	"math/rand"
 	"net/http"
 	"os"
 
 	"github.com/kasparasg/dockr/core"
+	"github.com/kasparasg/dockr/queue"
 )
 
 func Index(rw http.ResponseWriter, r *http.Request) {
 	type version struct {
-		number string `json:"number"`
+		Number string `json:"number"`
 	}
 
 	v, _ := json.Marshal(version{"0.0.1"})
@@ -26,13 +28,21 @@ func CreateBuild(rw http.ResponseWriter, req *http.Request) {
 		os.Getenv("DOCKER_CERT_PATH"),
 	)
 
-	go client.Deploy(out)
+	go client.BuildImage("build/express", out)
 
 	out.Flush()
 }
 
-func CreateComposeBuild(rw http.ResponseWriter, req *http.Request) {
-	compose := core.NewCompose()
+func Test(rw http.ResponseWriter, req *http.Request) {
+	type response struct {
+		Msg string `json:"string"`
+	}
 
-	compose.Up("foo", []string{"build/compose/docker-compose.yml"})
+	rand.Seed(42)
+
+	queue.WorkQueue <- queue.Job{Number: rand.Intn(100)}
+
+	v, _ := json.Marshal(response{"Work queued"})
+
+	rw.Write(v)
 }
